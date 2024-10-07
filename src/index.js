@@ -13,6 +13,7 @@ import Product from './Pages/Product.js';
 import store from './store/store.js';
 import ProductForm from './components/ProductForm.js';
 import AuthLayout from './components/AuthLayout.js';
+import axios from 'axios';
 // import Practice from './Pages/Practice.js';
 
 const router = createBrowserRouter([
@@ -69,20 +70,8 @@ const router = createBrowserRouter([
   }
 ])
 
-// const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <App />,
-//     children: [
-//       {
-//         path: '/',
-//         element: <Home />,
-//       },
-//     ]
-//   }
-// ])
 
-
+// axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}` // we can use this for token 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
