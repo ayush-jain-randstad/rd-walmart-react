@@ -3,6 +3,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Collapse, Dropdown, initTWE } from "tw-elements";
 import Container from "../container/Container.js";
+import logo from "../../../src/Walmart_Spark.svg.png";
 
 function Header() {
   initTWE({ Collapse, Dropdown });
@@ -42,10 +43,10 @@ function Header() {
   }
 
   return (
-    <header className="shadow bg-gray-100">
+    <header className="shadow bg-blue-600">
       <Container>
-        <nav className="flex-no-wrap relative flex w-full items-center justify-between bg-zinc-50 py-2 shadow-dark-mild dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4">
-          <div className="flex w-full flex-wrap items-center justify-between px-3">
+        <nav className="flex-no-wrap relative flex w-full items-center justify-between bg-blue-600 py-2 shadow-dark-mild  lg:flex-wrap lg:justify-start ">
+          <div className="flex w-full items-center justify-between px-3 ">
             <button
               className="block border-0 bg-transparent px-2 text-black/50 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
               type="button"
@@ -69,24 +70,24 @@ function Header() {
                 </svg>
               </span>
             </button>
-
+            {/* <div className="relative flex flex-wrap items-center justify-between w-3/4"> */}
             <div
-              className="!visible hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
+              className="flex-grow basis-[100%] items-center lg:!flex lg:basis-auto flex "
               id="navbarSupportedContent1"
               data-twe-collapse-item
             >
               <a
-                className="mb-4 me-5 ms-2 mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
-                href="#"
+                className="mb-4 mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 sm:w-30 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 0 hover:bg-blue-900 rounded-full sm:px-3 sm:py-2 sm:text-sm"
+                href="/"
               >
                 <img
-                  src="https://tecdn.b-cdn.net/img/logo/te-transparent-noshadows.webp"
-                  style={{ height: "15px" }}
-                  alt="TE Logo"
+                  src={logo}
+                  style={{ height: "35px", width: "35px" }}
+                  alt="Walmart"
                   loading="lazy"
                 />
               </a>
-              <ul
+              {/* <ul
                 className="list-style-none me-auto flex flex-col ps-0 lg:flex-row"
                 data-twe-navbar-nav-ref
               >
@@ -98,7 +99,7 @@ function Header() {
                     key={item.name}
                   >
                     <Link
-                      className="text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
+                      className="text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2 text-white"
                       data-twe-nav-link-ref
                       to={item.slug}
                     >
@@ -106,8 +107,27 @@ function Header() {
                     </Link>
                   </li>
                 ) : null)}
-              </ul>
+              </ul> */}
+              <div className="mx-2 relative flex items-center lg:w-80 h-14 rounded-3xl bg-blue-900 ">
+                <div className="flex items-center invisible lg:visible">
+                  <img className="w-8 h-8 absolute start-3 top-3" src="https://i5.walmartimages.com/dfw/4ff9c6c9-fef1/k2-_02b30b40-3838-4956-a9e4-36420d28015f.v1.png" alt="car" />
+                  <h3 className="text-slate-200 absolute start-14 top-1 font-bold">Pickup</h3>
+                  <div className="flex items-center"><span className="text-slate-200 absolute start-14 top-6 text-sm">Sacramento Supercenter</span></div>
+                </div>
+                
+              </div>
+              <div className=" relative flex items-center  bg-white lg:w-1/2 w-full rounded-3xl"><input className="w-full p-3.5 px-4 border-0 bg-transparent outline-none rounded text-navy-700" type="text" placeholder="Search everything at Walmart online and in store" />
+                  <button type="submit" className=" absolute  end-3  p-2.5 text-sm font-medium text-white  rounded-3xl  focus:outline-none focus:ring-blue-900 dark:bg-blue-900 dark:hover:bg-blue-900 dark:focus:ring-blue-900">
+                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+                <span class="sr-only">Search</span>
+            </button> 
+              </div>
+            
             </div>
+            {/* </div> */}
+
              {loginStatus && (   
             <div className="relative flex items-center">
               <Link className="me-4 text-neutral-600 dark:text-white relative p-2" to={`/cart`} >
