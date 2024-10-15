@@ -4,6 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { Collapse, Dropdown, initTWE } from "tw-elements";
 import Container from "../container/Container.js";
 import logo from "../../../src/Walmart_Spark.svg.png";
+import { IoIosHeartEmpty } from "react-icons/io";
+import { CiUser } from "react-icons/ci";
+
+
+
 
 function Header() {
   initTWE({ Collapse, Dropdown });
@@ -45,7 +50,7 @@ function Header() {
   return (
     <header className="shadow bg-blue-600">
       <Container>
-        <nav className="flex-no-wrap relative flex w-full items-center justify-between bg-blue-600 py-2 shadow-dark-mild  lg:flex-wrap lg:justify-start ">
+        <nav className="flex-no-wrap relative flex w-full items-center justify-between bg-blue-600  shadow-dark-mild  lg:flex-wrap lg:justify-start ">
           <div className="flex w-full items-center justify-between px-3 ">
             <button
               className="block border-0 bg-transparent px-2 text-black/50 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
@@ -98,10 +103,10 @@ function Header() {
               </div>
               <div className=" relative flex items-center  bg-white lg:w-1/2 w-full rounded-3xl"><input className="w-full p-3.5 px-4 border-0 bg-transparent outline-none rounded text-navy-700" type="text" placeholder="Search everything at Walmart online and in store" />
                   <button type="submit" className=" absolute  end-3  p-2.5 text-sm font-medium text-white  rounded-3xl  focus:outline-none focus:ring-blue-900 dark:bg-blue-900 dark:hover:bg-blue-900 dark:focus:ring-blue-900">
-                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
-                <span class="sr-only">Search</span>
+                <span className="sr-only">Search</span>
             </button> 
               </div>
             
@@ -109,7 +114,28 @@ function Header() {
             {/* </div> */}
 
              {loginStatus && (   
-            <div className="relative flex items-center">
+              
+            <div className="relative flex items-center justify-between w-1/4">
+             
+              <button className=" w-18 hover:bg-blue-900 p-2 px-4 rounded-3xl invisible lg:visible text-sm">
+              <div className="flex items-center">
+                  <IoIosHeartEmpty className="w-4 h-4 text-white font-bold mr-2 " />
+                  <div>
+                  <div className="text-md  text-slate-50 ">Reorder</div>
+                  <div className="text-sm font-bold text-slate-50 ">My Items</div>
+                  </div>
+              </div> 
+                
+              </button>
+              <button className=" w-18 hover:bg-blue-900 p-2 px-4 rounded-3xl invisible lg:visible">
+              <div className="flex items-center">
+              <CiUser className="w-4 h-4 text-white font-bold mr-2" />
+              <div>
+                <div className="text-md  text-slate-50  ">Sign In</div>
+                <div className="text-sm font-bold text-slate-50 ">Account</div>
+                </div>
+                </div>
+              </button>
               <Link className="me-4 text-neutral-600 dark:text-white relative p-2" to={`/cart`} >
                 <span className="[&>svg]:w-5">
                   <svg
@@ -123,7 +149,7 @@ function Header() {
                 <div className="absolute rounded-full w-4 h-4 bg-red-500 text-white top-0 right-0 text-xs text-center">{cartLength}</div>
               </Link>
                              
-              <div
+              {/* <div
                 className="relative"
                 data-twe-dropdown-ref
                 data-twe-dropdown-alignment="end"
@@ -186,9 +212,9 @@ function Header() {
                     </a>
                   </li>
                 </ul>
-              </div>
+              </div> */}
 
-              <div
+              {/* <div
                 className="relative"
                 data-twe-dropdown-ref
                 data-twe-dropdown-alignment="end"
@@ -243,7 +269,7 @@ function Header() {
                     </a>
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </div>
             )}
           </div>
