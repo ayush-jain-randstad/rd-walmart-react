@@ -17,7 +17,7 @@ const ProductDetails = () => {
     if (id) {
       productService.getById(id).then((res) => {
         if (res) {
-          setProduct(res.data)
+          setProduct(res.data.data)
           setLoader(false)
         } else {
           setLoader(false)
@@ -26,7 +26,6 @@ const ProductDetails = () => {
       })
     }
   }, [id])
-  console.log('product details', product);
   
   let starArray = [1, 2, 3, 4, 5]
 
@@ -38,15 +37,12 @@ const ProductDetails = () => {
   }
 
   const addToCart = () => {    
-    // cartService.addToCart(user_id, [{ id : parseInt(id) , quantity: quantity}])
-    // .then((res) => console.log(' add to cart response', res))
-    product.data.quantity = quantity    
+    product.quantity = quantity    
     const existingCart = JSON.parse(localStorage.getItem('cart')) || []
-    const existingProductIndex = existingCart.findIndex(item => item.data.id === product.data.id);
-    console.log('existingCart',existingCart.length);
+    const existingProductIndex = existingCart.findIndex(item => item.id === product.id);
     if (existingProductIndex !== -1) {
       // If product already exists, update quantity
-      existingCart[existingProductIndex].data.quantity = quantity;
+      existingCart[existingProductIndex].quantity = quantity;
     } else {
       // If product doesn't exist, add it to the cart
       existingCart.push({ ...product });
@@ -55,7 +51,8 @@ const ProductDetails = () => {
     localStorage.setItem('cart', JSON.stringify(existingCart))
 
   }
-
+  // console.log('product details', product);
+  
   return (
     <div>
       {loader ? (
@@ -83,27 +80,27 @@ const ProductDetails = () => {
               <div className="p-4 lg:max-w-7xl max-w-xl max-lg:mx-auto">
                 <div className="grid items-start grid-cols-1 lg:grid-cols-5 gap-12">
                   <div className="min-h-[500px] lg:col-span-3 bg-gradient-to-tr via-[#FFE0B5] to-[#FFF2D7] rounded-lg w-full lg:sticky top-0 text-center p-6">
-                    <img src={product?.data.images[0]} alt="Product" className="w-3/5 rounded object-cover mx-auto py-6" />
+                    <img src={product?.images[0]} alt="Product" className="w-3/5 rounded object-cover mx-auto py-6" />
 
                     <hr className="border-white border my-6" />
 
                     <div className="flex flex-wrap gap-x-4 gap-y-6 justify-center mx-auto">
                       <div className="w-20 h-20 max-lg:w-16 max-lg:h-16 bg-[#fff2c9] p-3 rounded-lg">
-                        <img src={product?.data.images[0]} alt="Product1" className="w-full h-full cursor-pointer" />
+                        <img src={product?.images[0]} alt="Product1" className="w-full h-full cursor-pointer" />
                       </div>
                     </div>
                   </div>
 
                   <div className="lg:col-span-2">
-                    <h2 className="text-2xl font-bold text-gray-800">{product?.data.title} | {product?.data.category}</h2>
+                    <h2 className="text-2xl font-bold text-gray-800">{product?.title} | {product?.category}</h2>
                     <div className="flex flex-wrap gap-4 mt-4">
-                      <p className="text-gray-800 text-xl font-bold">${product?.data.price}</p>
+                      <p className="text-gray-800 text-xl font-bold">${product?.price}</p>
                       <p className="text-gray-400 text-xl"><strike>$16</strike> <span className="text-sm ml-1">Tax included</span></p>
                     </div>
 
                     <div className="flex space-x-2 mt-4">
-                      {starArray.map((star, index) => (
-                        <svg className={`w-5 ${star <= product?.data.rating ? 'fill-orange-400' : 'fill-[#CED5D8]'} `} viewBox="0 0 14 13" fill="none"
+                      {starArray?.map((star, index) => (
+                        <svg className={`w-5 ${star <= product?.rating ? 'fill-orange-400' : 'fill-[#CED5D8]'} `} viewBox="0 0 14 13" fill="none"
                           xmlns="http://www.w3.org/2000/svg" key={index}>
                           <path
                             d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
@@ -114,7 +111,7 @@ const ProductDetails = () => {
 
                     <div className="mt-8">
                       <h3 className="text-xl font-bold text-gray-800">About the Product</h3>
-                      <p>{product?.data.description}</p>
+                      <p>{product?.description}</p>
                     </div>
 
                     <div className='mt-5 py-2 text-center flex items-center'>
@@ -134,46 +131,34 @@ const ProductDetails = () => {
 
 
                     <button type="button" className="w-full mt-2 px-6 py-3 bg-orange-400 hover:bg-orange-500 text-white text-sm font-semibold rounded-md"
-                      onClick={() => addToCart()}>Add to cart</button>
+                    onClick={() => addToCart()}>Add to cart</button>
+                    {/* <button type="button" className="w-full mt-2 px-6 py-3 bg-orange-400 hover:bg-orange-500 text-white text-sm font-semibold rounded-md"
+                    >Go to cart</button> */}
 
                     <div className="mt-8">
                       <h3 className="text-xl font-bold text-gray-800">Reviews(10)</h3>
-
-                      <div className="flex items-start mt-8">
+                      {product.reviews.map((review, index) => (
+                      <div className="flex items-start mt-8"
+                            key={index}
+                      >
                         <img src="https://readymadeui.com/team-2.webp" className="w-12 h-12 rounded-full border-2 border-white" />
                         <div className="ml-3">
-                          <h4 className="text-sm font-bold">John Doe</h4>
+                          <h4 className="text-sm font-bold">{review.reviewerName}</h4>
                           <div className="flex space-x-1 mt-1">
-                            <svg className="w-4 fill-orange-400" viewBox="0 0 14 13" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
+                            {starArray?.map((star, index) => (
+                            <svg className={`w-4 ${star <= review.rating ? 'fill-orange-400' : 'fill-[#CED5D8]'} `} viewBox="0 0 14 13" fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                              key={index}>
                               <path
                                 d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
                             </svg>
-                            <svg className="w-4 fill-orange-400" viewBox="0 0 14 13" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path
-                                d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-                            </svg>
-                            <svg className="w-4 fill-orange-400" viewBox="0 0 14 13" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path
-                                d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-                            </svg>
-                            <svg className="w-4 fill-[#CED5D8]" viewBox="0 0 14 13" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path
-                                d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-                            </svg>
-                            <svg className="w-4 fill-[#CED5D8]" viewBox="0 0 14 13" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path
-                                d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-                            </svg>
-                            <p className="text-xs !ml-2 font-semibold">2 mins ago</p>
+                            ))}
+                            {/* <p className="text-xs !ml-2 font-semibold">{review.date}</p> */}
                           </div>
-                          <p className="text-xs mt-4">The service was amazing. I never had to wait that long for my food. The staff was friendly and attentive, and the delivery was impressively prompt.</p>
+                          <p className="text-xs mt-4">{review.comment}</p>
                         </div>
                       </div>
+                      ))}
                       <button type="button" className="w-full mt-8 px-4 py-2.5 bg-transparent border border-orange-400 text-gray-800 font-semibold rounded-lg">Read all reviews</button>
                     </div>
                   </div>
