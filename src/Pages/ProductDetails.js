@@ -9,10 +9,15 @@ const ProductDetails = () => {
   const [product, setProduct] = useState([])
   const [loader, setLoader] = useState(true)
   const [quantity, setQuantity] = useState(1)
+  const [isVisible, setIsVisible] = useState(false)
+  const [currentCart, setCurrentCart] = useState()
   const { id } = useParams();
   const user_id = localStorage.getItem('id')
   const navigate = useNavigate();
-
+  console.log('quantity', quantity);
+  console.log('isVisible', isVisible);
+  console.log('currentCart', currentCart);
+  
   useEffect(() => {
     if (id) {
       productService.getById(id).then((res) => {
@@ -47,9 +52,9 @@ const ProductDetails = () => {
       // If product doesn't exist, add it to the cart
       existingCart.push({ ...product });
     }
-
+    setCurrentCart(quantity)
     localStorage.setItem('cart', JSON.stringify(existingCart))
-
+    setIsVisible(true)
   }
   // console.log('product details', product);
   
@@ -62,20 +67,6 @@ const ProductDetails = () => {
       ) : (
         product && (
           <Container>
-            {/* <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
-              <img
-                  src={product?.data.images[0]}
-                  alt={product?.data.images[0]}
-                  className="rounded-xl"
-              />
-          </div>
-          <div className="w-full mb-6 text-center">
-              <h1 className="text-2xl font-bold">{product?.data.title}</h1>
-          </div>
-          <div className="browser-css text-center">
-              {(product?.data.description)}
-          </div> */}
-
             <div className="font-sans">
               <div className="p-4 lg:max-w-7xl max-w-xl max-lg:mx-auto">
                 <div className="grid items-start grid-cols-1 lg:grid-cols-5 gap-12">
@@ -129,11 +120,18 @@ const ProductDetails = () => {
                       </div>
                     </div>
 
-
-                    <button type="button" className="w-full mt-2 px-6 py-3 bg-orange-400 hover:bg-orange-500 text-white text-sm font-semibold rounded-md"
-                    onClick={() => addToCart()}>Add to cart</button>
-                    {/* <button type="button" className="w-full mt-2 px-6 py-3 bg-orange-400 hover:bg-orange-500 text-white text-sm font-semibold rounded-md"
-                    >Go to cart</button> */}
+                    { currentCart !== quantity && (
+                      <button type="button" className="w-full mt-2 px-6 py-3 bg-orange-400 hover:bg-orange-500 text-white text-sm font-semibold rounded-md"
+                      onClick={() => addToCart()}>Add to cart</button>
+                    ) }
+                    
+                    { isVisible && currentCart === quantity && (
+                      <Link to={'/cart'}>
+                        <button type="button" className="w-full mt-2 px-6 py-3 bg-orange-400            hover:bg-orange-500 text-white text-sm font-semibold rounded-md"
+                        >Go to cart
+                        </button>
+                    </Link>
+                    ) }                    
 
                     <div className="mt-8">
                       <h3 className="text-xl font-bold text-gray-800">Reviews(10)</h3>

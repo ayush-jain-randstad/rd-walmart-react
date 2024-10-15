@@ -87,27 +87,7 @@ function Header() {
                   loading="lazy"
                 />
               </a>
-              {/* <ul
-                className="list-style-none me-auto flex flex-col ps-0 lg:flex-row"
-                data-twe-navbar-nav-ref
-              >
-                {navItems.map((item) => 
-                  item.active ? (                  
-                  <li
-                    className="mb-4 lg:mb-0 lg:pe-2"
-                    data-twe-nav-item-ref
-                    key={item.name}
-                  >
-                    <Link
-                      className="text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2 text-white"
-                      data-twe-nav-link-ref
-                      to={item.slug}
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ) : null)}
-              </ul> */}
+              
               <div className="mx-2 relative flex items-center lg:w-80 h-14 rounded-3xl bg-blue-900 ">
                 <div className="flex items-center invisible lg:visible">
                   <img className="w-8 h-8 absolute start-3 top-3" src="https://i5.walmartimages.com/dfw/4ff9c6c9-fef1/k2-_02b30b40-3838-4956-a9e4-36420d28015f.v1.png" alt="car" />
