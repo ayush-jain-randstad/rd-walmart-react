@@ -46,9 +46,9 @@ function Header() {
   }
 
   return (
-    <header className="shadow bg-blue-600">
+    <header className="shadow bg-blue-500 ">
       <Container>
-        <nav className="flex-no-wrap relative flex w-full items-center justify-between bg-blue-600  shadow-dark-mild  lg:flex-wrap lg:justify-start ">
+        <nav className="flex-no-wrap relative flex w-full items-center justify-between  shadow-dark-mild  lg:flex-wrap lg:justify-start ">
           <div className="flex w-full items-center justify-between px-3 ">
             <button
               className="block border-0 bg-transparent px-2 text-black/50 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
@@ -85,7 +85,7 @@ function Header() {
               >
                 <img
                   src={logo}
-                  style={{ height: "35px", width: "35px" }}
+                  style={{ height: "35px", width: "45px" }}
                   alt="Walmart"
                   loading="lazy"
                 />
@@ -111,7 +111,7 @@ function Header() {
                   </li>
                 ) : null)}
               </ul> */}
-              <div className="mx-2 relative flex items-center lg:w-80 h-14 rounded-3xl bg-blue-900 ">
+              <div className="mx-1 relative flex items-center lg:w-1/2 h-14 rounded-full bg-blue-800 hover:bg-blue-900 ">
                 <div className="flex items-center invisible lg:visible">
                   <img className="w-8 h-8 absolute start-3 top-3" src="https://i5.walmartimages.com/dfw/4ff9c6c9-fef1/k2-_02b30b40-3838-4956-a9e4-36420d28015f.v1.png" alt="car" />
                   <h3 className="text-slate-200 absolute start-14 top-1 font-bold">Pickup</h3>
@@ -119,8 +119,8 @@ function Header() {
                 </div>
                 
               </div>
-              <div className=" relative flex items-center  bg-white lg:w-1/2 w-full rounded-3xl"><input className="w-full p-3.5 px-4 border-0 bg-transparent outline-none rounded text-navy-700" type="text" placeholder="Search everything at Walmart online and in store" />
-                  <button type="submit" className=" absolute  end-3  p-2.5 text-sm font-medium text-white  rounded-3xl  focus:outline-none focus:ring-blue-900 dark:bg-blue-900 dark:hover:bg-blue-900 dark:focus:ring-blue-900">
+              <div className=" flex items-center  bg-white lg:w-3/4  rounded-full"><input className="w-full p-3.5 px-4 border-0 bg-transparent outline-none rounded text-navy-700" type="text" placeholder="Search everything at Walmart online and in store" />
+              <button type="submit" className="mr-3 p-2.5 text-sm font-medium text-white  rounded-full  focus:outline-none focus:ring-sky-800 dark:bg-sky-800 dark:hover:bg-sky-800 dark:focus:ring-sky-800">
                 <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
@@ -131,30 +131,31 @@ function Header() {
             </div>
             {/* </div> */}
 
-             {loginStatus && (   
               
-            <div className="relative flex items-center justify-between w-1/4">
+              
+            <div className="relative flex items-center justify-between lg:w-1/4">
              
-              <button className=" w-18 hover:bg-blue-900 p-2 px-4 rounded-3xl invisible lg:visible text-sm">
-              <div className="flex items-center">
+              {loginStatus && <button className=" w-18 hover:bg-blue-900 p-2 px-4 m-1 rounded-full invisible lg:visible text-sm">
+              <div className="flex items-center ">
                   <IoIosHeartEmpty className="w-4 h-4 text-white font-bold mr-2 " />
                   <div>
-                  <div className="text-md  text-slate-50 ">Reorder</div>
+                  <div className="text-md  text-slate-50 text-start">Reorder</div>
                   <div className="text-sm font-bold text-slate-50 ">My Items</div>
                   </div>
               </div> 
                 
-              </button>
-              <button className=" w-18 hover:bg-blue-900 p-2 px-4 rounded-3xl invisible lg:visible">
+              </button>}
+              {!loginStatus &&
+              <button className=" w-18 hover:bg-blue-900 p-2 px-4 rounded-full invisible lg:visible">
               <div className="flex items-center">
-              <CiUser className="w-4 h-4 text-white font-bold mr-2" />
+              <CiUser className="w-5 h-5 text-white font-bold mr-1" />
               <div>
-                <div className="text-md  text-slate-50  ">Sign In</div>
+                <div className="text-md  text-slate-50  text-start">Sign In</div>
                 <div className="text-sm font-bold text-slate-50 ">Account</div>
                 </div>
                 </div>
-              </button>
-              <a className="me-4 text-neutral-600 dark:text-white relative p-2" href="#" >
+              </button> }
+              {loginStatus &&<a className="me-4 text-neutral-600 dark:text-white relative p-2" href="#" >
                 <span className="[&>svg]:w-5">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -165,7 +166,7 @@ function Header() {
                   </svg>
                 </span>
                 <div className="absolute rounded-full w-4 h-4 bg-red-500 text-white top-0 right-0 text-xs text-center">0</div>
-              </a>
+              </a>}
                              
               {/* <div
                 className="relative"
@@ -232,7 +233,7 @@ function Header() {
                 </ul>
               </div> */}
 
-              {/* <div
+            {loginStatus && <div
                 className="relative"
                 data-twe-dropdown-ref
                 data-twe-dropdown-alignment="end"
@@ -258,7 +259,7 @@ function Header() {
                   aria-labelledby="dropdownMenuButton2"
                   data-twe-dropdown-menu-ref
                 >
-                  <li>
+                  {/* <li>
                     <a
                       className="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none active:bg-zinc-200/60 active:no-underline dark:bg-surface-dark dark:text-white dark:hover:bg-neutral-800/25 dark:focus:bg-neutral-800/25 dark:active:bg-neutral-800/25"
                       href="#"
@@ -275,10 +276,10 @@ function Header() {
                     >
                       Another action
                     </a>
-                  </li>
+                  </li> */}
                   <li>
                     <a
-                      className="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none active:bg-zinc-200/60 active:no-underline dark:bg-surface-dark dark:text-white dark:hover:bg-neutral-800/25 dark:focus:bg-neutral-800/25 dark:active:bg-neutral-800/25"
+                      className="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal  hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none active:bg-zinc-200/60 active:no-underline dark:bg-surface-dark dark:text-white dark:hover:bg-neutral-800/25 dark:focus:bg-neutral-800/25 dark:active:bg-neutral-800/25 bg-blue-700"
                       href="#"
                       data-twe-dropdown-item-ref
                       onClick={handleLogout}
@@ -287,9 +288,9 @@ function Header() {
                     </a>
                   </li>
                 </ul>
-              </div> */}
+              </div> }
             </div>
-            )}
+            
           </div>
         </nav>
       </Container>

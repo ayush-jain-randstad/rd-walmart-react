@@ -1,7 +1,10 @@
 import React from 'react'
+// import Navbar from './Navbar'
 
 function SubHeader() {
   return (
+    <>
+    {/* <Navbar /> */}
     <ul className='flex flex-wrap content-between w-full px-4 p-2 bg-gray-200 text-blue-900 text-sm invisible lg:visible '>
       <li className='px-4'>Savings </li>
       <li className='px-4'>Grocery and Essentials</li>
@@ -14,6 +17,7 @@ function SubHeader() {
       <li className='px-4'>Auto</li>
       <li className='px-4'>Registery</li>
     </ul>
+    </>
   )
 }
 
