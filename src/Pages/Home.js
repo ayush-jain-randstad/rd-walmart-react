@@ -16,7 +16,6 @@ const Home = () => {
       setProducts(product.data.data.products)
     })
   },[])
-  console.log('productsproducts',products);
   
   return (
     <Container>

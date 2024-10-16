@@ -12,7 +12,7 @@ const ProductForm = () => {
     // console.log('categoriescategoriescategories',categories); //log 4 times manoj
     
     useEffect(() => {
-        console.log('insode use effect');
+        console.log('inside use effect');
         
         productService.getCategories()
         .then((category) => dispatch(categoryList(category.data)))

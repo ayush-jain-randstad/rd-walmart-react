@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const productCard = ({product}) => {
-    // why printing 8 times
   return (
     <div className="bg-white">
       <Link id="RouterNavLink" to={`product-details/${product.id}`}>

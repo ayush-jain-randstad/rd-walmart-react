@@ -16,11 +16,12 @@ const Login = () => {
       .login(data)
       .then((res) => {
         if (res.status == 200) {
-          localStorage.setItem("token", res.data.accessToken);
-          localStorage.setItem("id", res.data.id);
-          localStorage.setItem("email", res.data.email);
+          localStorage.setItem("token", res.data.data.accessToken);
+          localStorage.setItem("id", res.data.data.id);
+          localStorage.setItem("email", res.data.data.email);
           localStorage.setItem("status", true);
           navigate("/");
+          window.location.reload();
         } else {
           setError(res?.response?.data?.error?.message || "Bad request");
         }

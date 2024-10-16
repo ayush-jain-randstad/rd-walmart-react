@@ -14,6 +14,7 @@ import store from './store/store.js';
 import ProductForm from './components/ProductForm.js';
 import AuthLayout from './components/AuthLayout.js';
 import axios from 'axios';
+import Cart from './Pages/Cart.js';
 // import Practice from './Pages/Practice.js';
 
 const router = createBrowserRouter([
@@ -62,6 +63,14 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout authentication={true}>
             <ProductForm />
+          </AuthLayout>
+            )
+      },
+      {
+        path:'/cart',
+        element: (
+          <AuthLayout authentication={true}>
+            <Cart />
           </AuthLayout>
             )
       },

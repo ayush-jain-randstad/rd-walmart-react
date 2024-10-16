@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // import { MdClose, MdOutlineAddShoppingCart, MdOutlineMenu } from 'react-icons/md'
 import { Link, useNavigate } from "react-router-dom";
 import { Collapse, Dropdown, initTWE } from "tw-elements";
@@ -6,11 +6,14 @@ import Container from "../container/Container.js";
 import logo from "../../../src/Walmart_Spark.svg.png";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { CiUser } from "react-icons/ci";
+import axios from "axios";
 
 
 
 
 function Header() {
+  const [search, setSearch] = useState("");
+  const [searchData, setSearchData] = useState(false);
   initTWE({ Collapse, Dropdown });
   const loginStatus = Boolean(localStorage.getItem("status"))
   const navigate = useNavigate()
@@ -40,9 +43,23 @@ function Header() {
   const handleLogout = () => {
     console.log('handleLogout');
     localStorage.removeItem("token")
-    localStorage.clear()
+    localStorage.removeItem("status")
+    localStorage.clear();
     navigate('/login')
-    
+    window.location.reload()
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    axios.get(`https://dummyjson.com/products/search?q=${search}`).then((response) => {
+      console.log(response.data)
+      setSearchData(response.data.products)
+    })
+  }
+
+  const handleSeachInput = (e) => {
+    console.log(e.target.value)
+    setSearch(e.target.value);
   }
 
   return (
@@ -73,7 +90,6 @@ function Header() {
                 </svg>
               </span>
             </button>
-            {/* <div className="relative flex flex-wrap items-center justify-between w-3/4"> */}
             <div
               className="flex-grow basis-[100%] items-center lg:!flex lg:basis-auto flex "
               id="navbarSupportedContent1"
@@ -90,27 +106,9 @@ function Header() {
                   loading="lazy"
                 />
               </a>
-              {/* <ul
-                className="list-style-none me-auto flex flex-col ps-0 lg:flex-row"
-                data-twe-navbar-nav-ref
-              >
-                {navItems.map((item) => 
-                  item.active ? (                  
-                  <li
-                    className="mb-4 lg:mb-0 lg:pe-2"
-                    data-twe-nav-item-ref
-                    key={item.name}
-                  >
-                    <Link
-                      className="text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2 text-white"
-                      data-twe-nav-link-ref
-                      to={item.slug}
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ) : null)}
-              </ul> */}
+              
+              {loginStatus && 
+              <>
               <div className="mx-1 relative flex items-center lg:w-1/2 h-14 rounded-full bg-blue-800 hover:bg-blue-900 ">
                 <div className="flex items-center invisible lg:visible">
                   <img className="w-8 h-8 absolute start-3 top-3" src="https://i5.walmartimages.com/dfw/4ff9c6c9-fef1/k2-_02b30b40-3838-4956-a9e4-36420d28015f.v1.png" alt="car" />
@@ -119,21 +117,22 @@ function Header() {
                 </div>
                 
               </div>
-              <div className=" flex items-center  bg-white lg:w-3/4  rounded-full"><input className="w-full p-3.5 px-4 border-0 bg-transparent outline-none rounded text-navy-700" type="text" placeholder="Search everything at Walmart online and in store" />
-              <button type="submit" className="mr-3 p-2.5 text-sm font-medium text-white  rounded-full  focus:outline-none focus:ring-sky-800 dark:bg-sky-800 dark:hover:bg-sky-800 dark:focus:ring-sky-800">
+              <div className=" flex items-center  bg-white lg:w-3/4  rounded-full"><input className="w-full p-3.5 px-4 border-0 bg-transparent outline-none rounded text-navy-700" type="text" onChange={handleSeachInput} placeholder="Search everything at Walmart online and in store" />
+              <button type="submit" onClick={handleSubmit} className="mr-3 p-2.5 text-sm font-medium text-white  rounded-full  focus:outline-none focus:ring-sky-800 dark:bg-sky-800 dark:hover:bg-sky-800 dark:focus:ring-sky-800">
                 <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
                 <span className="sr-only">Search</span>
             </button> 
               </div>
+              </>
+}
             
             </div>
-            {/* </div> */}
 
               
               
-            <div className="relative flex items-center justify-between lg:w-1/4">
+            <div className={`relative flex items-center justify-between ${!loginStatus ? null : 'lg:w-1/4' }`}>
              
               {loginStatus && <button className=" w-18 hover:bg-blue-900 p-2 px-4 m-1 rounded-full invisible lg:visible text-sm">
               <div className="flex items-center ">
@@ -146,6 +145,7 @@ function Header() {
                 
               </button>}
               {!loginStatus &&
+              <>
               <button className=" w-18 hover:bg-blue-900 p-2 px-4 rounded-full invisible lg:visible">
               <div className="flex items-center">
               <CiUser className="w-5 h-5 text-white font-bold mr-1" />
@@ -154,7 +154,18 @@ function Header() {
                 <div className="text-sm font-bold text-slate-50 ">Account</div>
                 </div>
                 </div>
-              </button> }
+              </button> 
+
+              <button className=" w-18 hover:bg-blue-900 p-2 px-4 rounded-full invisible lg:visible">
+              <div className="flex items-center">
+              <CiUser className="w-5 h-5 text-white font-bold mr-1" />
+              <div>
+                <div className="text-md  text-slate-50  text-start">Register</div>
+                </div>
+                </div>
+              </button> 
+</>
+              }
               {loginStatus &&<a className="me-4 text-neutral-600 dark:text-white relative p-2" href="#" >
                 <span className="[&>svg]:w-5">
                   <svg
@@ -168,70 +179,7 @@ function Header() {
                 <div className="absolute rounded-full w-4 h-4 bg-red-500 text-white top-0 right-0 text-xs text-center">0</div>
               </a>}
                              
-              {/* <div
-                className="relative"
-                data-twe-dropdown-ref
-                data-twe-dropdown-alignment="end"
-              >
-                <a
-                  className="me-4 flex items-center text-neutral-600 dark:text-white"
-                  href="#"
-                  id="dropdownMenuButton1"
-                  role="button"
-                  data-twe-dropdown-toggle-ref
-                  aria-expanded="false"
-                >
-                  <span className="[&>svg]:w-5">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </span>
-                  <span className="absolute -mt-4 ms-2.5 rounded-full bg-danger px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white">
-                    1
-                  </span>
-                </a>
-                <ul
-                  className="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg data-[twe-dropdown-show]:block dark:bg-surface-dark"
-                  aria-labelledby="dropdownMenuButton1"
-                  data-twe-dropdown-menu-ref
-                >
-                  <li>
-                    <a
-                      className="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none active:bg-zinc-200/60 active:no-underline dark:bg-surface-dark dark:text-white dark:hover:bg-neutral-800/25 dark:focus:bg-neutral-800/25 dark:active:bg-neutral-800/25"
-                      href="#"
-                      data-twe-dropdown-item-ref
-                    >
-                      Action
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none active:bg-zinc-200/60 active:no-underline dark:bg-surface-dark dark:text-white dark:hover:bg-neutral-800/25 dark:focus:bg-neutral-800/25 dark:active:bg-neutral-800/25"
-                      href="#"
-                      data-twe-dropdown-item-ref
-                    >
-                      Another action
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none active:bg-zinc-200/60 active:no-underline dark:bg-surface-dark dark:text-white dark:hover:bg-neutral-800/25 dark:focus:bg-neutral-800/25 dark:active:bg-neutral-800/25"
-                      href="#"
-                      data-twe-dropdown-item-ref
-                    >
-                      Something else here
-                    </a>
-                  </li>
-                </ul>
-              </div> */}
+             
 
             {loginStatus && <div
                 className="relative"
@@ -259,27 +207,10 @@ function Header() {
                   aria-labelledby="dropdownMenuButton2"
                   data-twe-dropdown-menu-ref
                 >
-                  {/* <li>
-                    <a
-                      className="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none active:bg-zinc-200/60 active:no-underline dark:bg-surface-dark dark:text-white dark:hover:bg-neutral-800/25 dark:focus:bg-neutral-800/25 dark:active:bg-neutral-800/25"
-                      href="#"
-                      data-twe-dropdown-item-ref
-                    >
-                      Your Profile
-                    </a>
-                  </li>
+                  
                   <li>
                     <a
-                      className="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none active:bg-zinc-200/60 active:no-underline dark:bg-surface-dark dark:text-white dark:hover:bg-neutral-800/25 dark:focus:bg-neutral-800/25 dark:active:bg-neutral-800/25"
-                      href="#"
-                      data-twe-dropdown-item-ref
-                    >
-                      Another action
-                    </a>
-                  </li> */}
-                  <li>
-                    <a
-                      className="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal  hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none active:bg-zinc-200/60 active:no-underline dark:bg-surface-dark dark:text-white dark:hover:bg-neutral-800/25 dark:focus:bg-neutral-800/25 dark:active:bg-neutral-800/25 bg-blue-700"
+                      className="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal  hover:bg-sky-200/60 focus:bg-sky-200/60 focus:outline-none active:bg-sky-200/60 active:no-underline dark:bg-surface-dark dark:text-white dark:hover:bg-neutral-800/25 dark:focus:bg-neutral-800/25 dark:active:bg-neutral-800/25 bg-blue-700/100 text-blue-700"
                       href="#"
                       data-twe-dropdown-item-ref
                       onClick={handleLogout}
